@@ -22,8 +22,8 @@ class EmailBloc extends Bloc<EmailEvent, EmailState> {
       }
     }
     if (event is EmailChanged) {
-      var _password = _formRepository.checkPassword(event.value);
-      yield EmailSuccess(_password);
+      var _email = _formRepository.checkEmail(event.value);
+      yield EmailSuccess(_email);
     }
   }
 }

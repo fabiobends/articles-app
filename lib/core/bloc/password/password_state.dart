@@ -1,16 +1,19 @@
 part of 'password_bloc.dart';
 
 abstract class PasswordState extends Equatable {
-  const PasswordState();
+  final String value;
+  const PasswordState({this.value = ''});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [value];
 }
 
-class PasswordInitial extends PasswordState {
+class PasswordInitial extends PasswordState {}
+
+class PasswordSuccess extends PasswordState {
   final String value;
 
-  const PasswordInitial({this.value = ''});
+  const PasswordSuccess(this.value);
 
   @override
   List<Object> get props => [value];
@@ -22,13 +25,4 @@ class PasswordFailure extends PasswordState {
 
   @override
   List<Object> get props => [errorMessage];
-}
-
-class PasswordSuccess extends PasswordState {
-  final String value;
-
-  const PasswordSuccess(this.value);
-
-  @override
-  List<Object> get props => [value];
 }
