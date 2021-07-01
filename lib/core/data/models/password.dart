@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class Email extends Equatable {
+class Password extends Equatable {
   final String value;
 
-  const Email({
+  const Password({
     required this.value,
   });
 
-  Email copyWith({
+  Password copyWith({
     String? value,
   }) {
-    return Email(
+    return Password(
       value: value ?? this.value,
     );
   }
@@ -23,15 +23,16 @@ class Email extends Equatable {
     };
   }
 
-  factory Email.fromMap(Map<String, dynamic> map) {
-    return Email(
+  factory Password.fromMap(Map<String, dynamic> map) {
+    return Password(
       value: map['value'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Email.fromJson(String source) => Email.fromMap(json.decode(source));
+  factory Password.fromJson(String source) =>
+      Password.fromMap(json.decode(source));
 
   @override
   bool get stringify => true;
@@ -40,12 +41,7 @@ class Email extends Equatable {
   List<Object> get props => [value];
 
   bool validator() {
-    final emailRegex = RegExp(
-        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)+$');
-
-    final isValid = emailRegex.hasMatch(this.value);
-
-    if (isValid) {
+    if (this.value.length >= 8) {
       return true;
     } else {
       throw Error;
