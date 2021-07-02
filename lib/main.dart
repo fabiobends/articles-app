@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'core/pages/login_page/login_page.dart';
+import 'core/pages/signin/signin_page.dart';
 // import 'core/data/repositories/form_repository.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: SignInPage(),
     );
   }
 }

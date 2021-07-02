@@ -14,14 +14,18 @@ class EmailBloc extends Bloc<EmailEvent, EmailState> {
   Stream<EmailState> mapEventToState(EmailEvent event) async* {
     if (event is EmailChanged) {
       yield EmailInProgress(email: event.email);
-      state.email.validator();
-      yield EmailSuccess(email: state.email);
+      if (state.email.validator()) {
+        yield EmailSuccess(email: state.email);
+      }
     } else if (event is EmailUnfocused) {
       try {
-        state.email.validator();
-        yield EmailSuccess(email: state.email);
+        if (state.email.validator()) {
+          yield EmailSuccess(email: state.email);
+        } else {
+          yield EmailFailure("Your email is typed wrong, invalid email.");
+        }
       } catch (err) {
-        yield EmailFailure("Your email is typed wrong, invalid email.");
+        yield EmailFailure("Something went wrong.");
       }
     }
   }

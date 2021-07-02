@@ -45,10 +45,6 @@ class Email extends Equatable {
 
     final isValid = emailRegex.hasMatch(this.value);
 
-    if (isValid) {
-      return true;
-    } else {
-      throw Error;
-    }
+    return isValid;
   }
 }

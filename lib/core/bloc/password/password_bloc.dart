@@ -11,24 +11,21 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
   PasswordBloc() : super(PasswordInitial());
 
   @override
-  void onTransition(Transition<PasswordEvent, PasswordState> transition) {
-    print(transition);
-    super.onTransition(transition);
-  }
-
-  @override
   Stream<PasswordState> mapEventToState(PasswordEvent event) async* {
     if (event is PasswordChanged) {
       yield PasswordInProgress(password: event.password);
-      state.password.validator();
-      yield PasswordSuccess(password: state.password);
+      if (state.password.validator()) {
+        yield PasswordSuccess(password: state.password);
+      } else {
+        yield PasswordFailure(
+            "Your password should be at least 8 digits long.");
+      }
     } else if (event is PasswordUnfocused) {
       try {
         state.password.validator();
         yield PasswordSuccess(password: state.password);
       } catch (err) {
-        yield PasswordFailure(
-            "Your password should be at least 8 digits long.");
+        yield PasswordFailure("Something went wrong!");
       }
     }
   }

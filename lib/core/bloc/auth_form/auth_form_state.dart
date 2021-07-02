@@ -36,10 +36,10 @@ class FormSuccess extends AuthFormState {
 }
 
 class FormFailure extends AuthFormState {
-  final String messageError;
+  final String errorMessage;
 
-  const FormFailure(this.messageError);
+  const FormFailure(this.errorMessage);
 
   @override
-  List<Object> get props => [messageError];
+  List<Object> get props => [errorMessage];
 }

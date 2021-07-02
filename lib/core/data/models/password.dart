@@ -44,7 +44,7 @@ class Password extends Equatable {
     if (this.value.length >= 8) {
       return true;
     } else {
-      throw Error;
+      return false;
     }
   }
 }
