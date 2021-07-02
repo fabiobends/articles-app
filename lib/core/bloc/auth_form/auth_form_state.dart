@@ -23,51 +23,23 @@ class FormInProgress extends AuthFormState {
 
   @override
   List<Object> get props => [email, password];
-
-  FormInProgress copyWith({
-    Email? email,
-    Password? password,
-  }) {
-    return FormInProgress(
-      email: email ?? this.email,
-      password: password ?? this.password,
-    );
-  }
 }
 
-class FormSuccess extends AuthFormState {}
+class FormSuccess extends AuthFormState {
+  final Email email;
+  final Password password;
+
+  const FormSuccess({required this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
+}
 
 class FormFailure extends AuthFormState {
-  final String formMessageError;
+  final String messageError;
 
-  const FormFailure(this.formMessageError);
-
-  @override
-  List<Object> get props => [formMessageError];
-}
-
-class EmailInitial extends AuthFormState {}
-
-class EmailSuccess extends AuthFormState {}
-
-class EmailFailure extends AuthFormState {
-  final String emailMessageError;
-
-  const EmailFailure(this.emailMessageError);
+  const FormFailure(this.messageError);
 
   @override
-  List<Object> get props => [emailMessageError];
-}
-
-class PasswordInitial extends AuthFormState {}
-
-class PasswordSuccess extends AuthFormState {}
-
-class PasswordFailure extends AuthFormState {
-  final String passwordMessageError;
-
-  const PasswordFailure(this.passwordMessageError);
-
-  @override
-  List<Object> get props => [passwordMessageError];
+  List<Object> get props => [messageError];
 }

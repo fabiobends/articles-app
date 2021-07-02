@@ -7,30 +7,12 @@ abstract class AuthFormEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class EmailChanged extends AuthFormEvent {
+class FormSent extends AuthFormEvent {
   final Email email;
-
-  const EmailChanged({
-    required this.email,
-  });
-
-  @override
-  List<Object> get props => [email];
-}
-
-class EmailUnfocused extends AuthFormEvent {}
-
-class PasswordChanged extends AuthFormEvent {
   final Password password;
 
-  const PasswordChanged({
-    required this.password,
-  });
+  const FormSent({required this.email, required this.password});
 
   @override
-  List<Object> get props => [password];
+  List<Object> get props => [email, password];
 }
-
-class PasswordUnfocused extends AuthFormEvent {}
-
-class FormSent extends AuthFormEvent {}

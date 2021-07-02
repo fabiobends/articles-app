@@ -7,12 +7,12 @@ abstract class PasswordEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PasswordUnfocused extends PasswordEvent {
-  final String value;
-  const PasswordUnfocused(this.value);
+class PasswordChanged extends PasswordEvent {
+  final Password password;
+  const PasswordChanged({required this.password});
+
+  @override
+  List<Object> get props => [password];
 }
 
-class PasswordChanged extends PasswordEvent {
-  final String value;
-  const PasswordChanged(this.value);
-}
+class PasswordUnfocused extends PasswordEvent {}

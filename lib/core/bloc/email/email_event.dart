@@ -7,12 +7,12 @@ abstract class EmailEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class EmailUnfocused extends EmailEvent {
-  final String value;
-  const EmailUnfocused(this.value);
+class EmailChanged extends EmailEvent {
+  final Email email;
+  const EmailChanged({required this.email});
+
+  @override
+  List<Object> get props => [email];
 }
 
-class EmailChanged extends EmailEvent {
-  final String value;
-  const EmailChanged(this.value);
-}
+class EmailUnfocused extends EmailEvent {}

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:articles_app/core/data/repositories/form_repository.dart';
+import 'package:articles_app/core/data/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,22 +8,21 @@ part 'email_event.dart';
 part 'email_state.dart';
 
 class EmailBloc extends Bloc<EmailEvent, EmailState> {
-  final FormRepository _formRepository;
-  EmailBloc(this._formRepository) : super(EmailInitial());
+  EmailBloc() : super(EmailInitial());
 
   @override
   Stream<EmailState> mapEventToState(EmailEvent event) async* {
-    if (event is EmailUnfocused) {
+    if (event is EmailChanged) {
+      yield EmailInProgress(email: event.email);
+      state.email.validator();
+      yield EmailSuccess(email: state.email);
+    } else if (event is EmailUnfocused) {
       try {
-        var _email = _formRepository.checkEmail(event.value);
-        yield EmailSuccess(_email);
+        state.email.validator();
+        yield EmailSuccess(email: state.email);
       } catch (err) {
         yield EmailFailure("Your email is typed wrong, invalid email.");
       }
-    }
-    if (event is EmailChanged) {
-      var _email = _formRepository.checkEmail(event.value);
-      yield EmailSuccess(_email);
     }
   }
 }

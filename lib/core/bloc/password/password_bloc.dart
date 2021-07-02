@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:articles_app/core/data/repositories/form_repository.dart';
+import 'package:articles_app/core/data/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,23 +8,28 @@ part 'password_event.dart';
 part 'password_state.dart';
 
 class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
-  final FormRepository _formRepository;
-  PasswordBloc(this._formRepository) : super(PasswordInitial());
+  PasswordBloc() : super(PasswordInitial());
+
+  @override
+  void onTransition(Transition<PasswordEvent, PasswordState> transition) {
+    print(transition);
+    super.onTransition(transition);
+  }
 
   @override
   Stream<PasswordState> mapEventToState(PasswordEvent event) async* {
-    if (event is PasswordUnfocused) {
+    if (event is PasswordChanged) {
+      yield PasswordInProgress(password: event.password);
+      state.password.validator();
+      yield PasswordSuccess(password: state.password);
+    } else if (event is PasswordUnfocused) {
       try {
-        var _password = _formRepository.checkPassword(event.value);
-        yield PasswordSuccess(_password);
+        state.password.validator();
+        yield PasswordSuccess(password: state.password);
       } catch (err) {
         yield PasswordFailure(
             "Your password should be at least 8 digits long.");
       }
-    }
-    if (event is PasswordChanged) {
-      var _password = _formRepository.checkPassword(event.value);
-      yield PasswordSuccess(_password);
     }
   }
 }
