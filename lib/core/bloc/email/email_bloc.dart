@@ -25,7 +25,8 @@ class EmailBloc extends Bloc<EmailEvent, EmailState> {
           yield EmailFailure("Your email is typed wrong, invalid email.");
         }
       } catch (err) {
-        yield EmailFailure("Something went wrong.");
+        yield EmailFailure(
+            "Something went wrong, server problem or internet issue.");
       }
     }
   }

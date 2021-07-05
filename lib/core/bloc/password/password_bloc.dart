@@ -16,16 +16,18 @@ class PasswordBloc extends Bloc<PasswordEvent, PasswordState> {
       yield PasswordInProgress(password: event.password);
       if (state.password.validator()) {
         yield PasswordSuccess(password: state.password);
-      } else {
-        yield PasswordFailure(
-            "Your password should be at least 8 digits long.");
       }
     } else if (event is PasswordUnfocused) {
       try {
-        state.password.validator();
-        yield PasswordSuccess(password: state.password);
+        if (state.password.validator()) {
+          yield PasswordSuccess(password: state.password);
+        } else {
+          yield PasswordFailure(
+              "Your password should be at least 8 digits long.");
+        }
       } catch (err) {
-        yield PasswordFailure("Something went wrong!");
+        yield PasswordFailure(
+            "Something went wrong, server problem or internet issue.");
       }
     }
   }

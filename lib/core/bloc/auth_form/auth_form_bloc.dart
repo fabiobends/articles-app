@@ -15,15 +15,15 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState> {
     if (event is FormSent) {
       try {
         yield FormInProgress(email: event.email, password: event.password);
-        if (event.email.validator() && event.password.validator()) {
+        if (state.email.validator() && state.password.validator()) {
           yield FormSuccess(email: state.email, password: state.password);
         } else {
           yield FormFailure(
-              "You typed wrong information or verify your internet, something went wrong");
+              "You typed wrong information. Verify your email and password.");
         }
       } catch (err) {
         yield FormFailure(
-            "You typed wrong information or verify your internet, something went wrong");
+            "Something went wrong, server problem or internet issue.");
       }
     }
   }
